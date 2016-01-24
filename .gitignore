@@ -1,0 +1,6 @@
+*.o
+*.d
+level_gen*
+*.stl
+*~
+/tt_reborn*
