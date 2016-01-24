@@ -39,7 +39,7 @@ int str_to_int(string s) {
 int main(int argc, char** arg) {
   srandom(time(0));
 
-  int lvlc = 100;
+  int lvlc = 1;
   if (argc > 1) {
     lvlc = str_to_int(arg[1]);
   }
