@@ -19,18 +19,26 @@ class Prekazitor
     enum TypPrekazky {
       DIRA,
       TRAMPOSKA,
+      PARKUR,
+      PISKACOJUMP,
       TYPY_PREKAZEK
     };
 
     Sektor* s;
     int* X;
     int* Y;
+
+  public:
     int max_x, min_y;
+
+  private:
 
     SadaDlazdic til;
 
     bool dira();
     bool tramposka();
+    bool parkur();
+    bool piskacojump();
 
     void nahodny_skok(int &x, int &y);
     void nahorovak(int dh);
@@ -38,6 +46,8 @@ class Prekazitor
     void stredovak(int l);
     void uber_nahorovak();
     void uber_dolovak();
+    void ostruvek();
+    void piskac();
     void zakaz(int x1, int x2, int y1, int y2);
 
     bool uprav_smer(bool &sm, int h);

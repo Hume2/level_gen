@@ -109,6 +109,19 @@ void Prekazitor::dolovak(int dh) {
   *Y = Y2;
 }
 
+void Prekazitor::ostruvek() {
+  BLOK bloky[9] = {K[3], K[4], K[5], K[6], K[7], K[8], K[9], K[10], K[11]};
+  int x2 = *X + 1 + exp_rand(4,6);
+  int y2 = *Y + 1 + exp_rand(4,4);
+  s->intact2->ram_obdelnik(bloky, *X, x2, *Y, y2);
+  s->intact2->poloz_blok(K[0], *X, (*Y)-1);
+  s->intact2->obdelnik(K[1], (*X)+1, x2-1, (*Y)-1, (*Y)-1);
+  s->intact2->poloz_blok(K[2], x2, (*Y)-1);
+  //std::cout << "před:" << *X;
+  *X = x2;
+  //std::cout << " po:" << *X << std::endl;
+}
+
 bool Prekazitor::uprav_smer(bool &sm, int h) {
   if (sm) {
     if (*Y + h >= s->intact2->vyska) {
@@ -168,6 +181,31 @@ bool Prekazitor::tramposka() {
   return true;
 }
 
+bool Prekazitor::parkur() {
+  bool zacato = false;
+  int x2 = *X, y2 = *Y;
+  nahodny_skok(x2, y2);
+  while (x2 < max_x) {
+    if (!zacato) {
+      uber_dolovak();
+      zacato = true;
+    }
+    *X = x2;
+    *Y = y2;
+    if (nahodne(3) == 0 || x2 >= max_x) {
+      break;
+    }
+    ostruvek();
+    x2 = *X;
+    nahodny_skok(x2, y2);
+  }
+  if (zacato) {
+    uber_nahorovak();
+    (*X)++;
+  }
+  return zacato;
+}
+
 bool Prekazitor::prekazka() {
   TypPrekazky typ = (TypPrekazky)nahodne((int)TYPY_PREKAZEK);
   switch (typ) {
@@ -175,5 +213,7 @@ bool Prekazitor::prekazka() {
       return dira();
     case TRAMPOSKA:
       return tramposka();
+    case PARKUR:
+      return parkur();
   }
 }

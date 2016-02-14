@@ -19,9 +19,14 @@ class LesniPodlaha {
 
     int w, h, stred, x;
     int trr;
-    int min_y, max_y, min_x, max_x;
+
+    void set_min_x(int n);
+    void set_min_y(int n);
+    void set_max_x(int n);
+    void set_max_y(int n);
 
   private:
+    int min_y, max_y, min_x, max_x;
     Sektor* nas_sektor;
 
     /*enum Stoupani{

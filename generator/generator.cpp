@@ -32,9 +32,9 @@ void gen_lesni_podlaha(Sektor *s) {
 
 void gen_jeskyne1(Sektor *s) {
   LesniPodlaha lp(s, PoleDlazdic::led);
-  lp.min_y = s->intact2->vyska/2 + 3;
+  lp.set_min_y(s->intact2->vyska/2 + 3);
   Strop st(s, PoleDlazdic::led);
-  st.max_y = s->intact2->vyska/2 - 1;
+  st.max_y = s->intact2->vyska/2 - 2;
   lp.generuj();
   st.generuj();
 }

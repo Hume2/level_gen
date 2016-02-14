@@ -331,7 +331,7 @@ void LesniPodlaha::generuj() {
     codal[Adolovak] = trr;
     codal[Astoupej] = stoupani > 4 ? trr*trr : sqrt(trr);
     codal[Aklesej] = stoupani < 4 ? trr*trr : sqrt(trr);
-    codal[Aprekazej] = 0.2;
+    codal[Aprekazej] = 1;
     if (stred > s) {
       double coef = (s-stred)/h;
       codal[Adolovak] += coef;
@@ -387,4 +387,22 @@ void LesniPodlaha::generuj() {
     }
   }
   stredovak(x,w);
+}
+
+void LesniPodlaha::set_max_x(int n) {
+  max_x = n;
+  pr->max_x = n;
+}
+
+void LesniPodlaha::set_max_y(int n) {
+  max_y = n;
+}
+
+void LesniPodlaha::set_min_x(int n) {
+  min_x = n;
+}
+
+void LesniPodlaha::set_min_y(int n) {
+  min_y = n;
+  pr->min_y = n;
 }

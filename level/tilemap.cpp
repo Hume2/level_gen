@@ -1,5 +1,6 @@
 #include "tilemap.h"
 
+#include <iostream>
 #include <string>
 #include <stdio.h>
 #include <vector>
@@ -130,14 +131,15 @@ void Tilemap::obdelnik(BLOK blok, int x1, int x2, int y1, int y2) {
 
 void Tilemap::ram_obdelnik(BLOK *blok, int x1, int x2, int y1, int y2) {
   poloz_blok(blok[0],x1,y1);
-  obdelnik(blok[1],x1+1,y1,x2-1,y1);          //  +--+--+--+
+  obdelnik(blok[1],x1+1,x2-1,y1,y1);          //  +--+--+--+
   poloz_blok(blok[2],x2,y1);                  //  | 0| 1| 2|
-  obdelnik(blok[3],x1,y1+1,x1,y2-1);          //  +--+--+--+
-  obdelnik(blok[4],x1+1,y1+1,x2-1,y2-1);      //  | 3| 4| 5|
-  obdelnik(blok[5],x2,y1+1,x2,y2-1);          //  +--+--+--+
+  obdelnik(blok[3],x1,x1,y1+1,y2-1);          //  +--+--+--+
+  obdelnik(blok[4],x1+1,x2-1,y1+1,y2-1);      //  | 3| 4| 5|
+  obdelnik(blok[5],x2,x2,y1+1,y2-1);          //  +--+--+--+
   poloz_blok(blok[6],x1,y2);                  //  | 6| 7| 8|
-  obdelnik(blok[7],x1+1,y2,x2-1,y2);          //  +--+--+--+
+  obdelnik(blok[7],x1+1,x2-1,y2,y2);          //  +--+--+--+
   poloz_blok(blok[8],x2,y2);
+  //std::cout << "x1:" << x1 << " y1:" << y1 << " x2:" << x2 << " y2:" << y2 << std::endl;
 }
 
 bool Tilemap::je_prazdny() {
