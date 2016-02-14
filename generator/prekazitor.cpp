@@ -32,7 +32,7 @@ Prekazitor::Prekazitor(Sektor* s_, int* X_, int* Y_, SadaDlazdic til_, int max_x
 {
 }
 
-void Prekazitor::nahodny_skok(int &x, int &y) {
+void Prekazitor::nahodny_skok(int &x, int &y, int max_dx) {
   int dy = nahodne(5) - 2;
   int dx = nahodne(7) + 3;
   if ((dy < 0) && (dx >= 10)) {
@@ -41,6 +41,9 @@ void Prekazitor::nahodny_skok(int &x, int &y) {
   } else if ((dy == -2) && (dx >= 9)) {
     dy = -3;
     dx = 7;
+  }
+  if (dx > max_dx) {
+    dx = max_dx;
   }
   x += dx;
   int y2 = y + dy;
@@ -122,6 +125,16 @@ void Prekazitor::ostruvek() {
   //std::cout << " po:" << *X << std::endl;
 }
 
+void Prekazitor::piskac() {
+  Objekt* obj;
+  if (s->level->tema.biom == TemaLevelu::Tledovec) {
+    obj = new Objekt("flyingsnowball",(*X)*32,(*Y)*32);
+  } else {
+    obj = new Objekt("spidermite",(*X)*32,(*Y)*32);
+  }
+  s->objekty.push_back(obj);
+}
+
 bool Prekazitor::uprav_smer(bool &sm, int h) {
   if (sm) {
     if (*Y + h >= s->intact2->vyska) {
@@ -190,6 +203,7 @@ bool Prekazitor::parkur() {
       uber_dolovak();
       zacato = true;
     }
+    zakaz(*X, x2, 0, s->intact2->vyska);
     *X = x2;
     *Y = y2;
     if (nahodne(3) == 0 || x2 >= max_x) {
@@ -198,10 +212,39 @@ bool Prekazitor::parkur() {
     ostruvek();
     x2 = *X;
     nahodny_skok(x2, y2);
+    if (x2 >= max_x) {
+      (*X)++;
+    }
   }
   if (zacato) {
     uber_nahorovak();
     (*X)++;
+  }
+  return zacato;
+}
+
+bool Prekazitor::piskacojump() {
+  bool zacato = false;
+  int x2 = *X, y2 = *Y;
+  int x1 = x2;
+  nahodny_skok(x2, y2);
+  while (x2 < max_x) {
+    if (!zacato) {
+      uber_dolovak();
+      zacato = true;
+    }
+    *X = x2;
+    *Y = y2;
+    if (nahodne(3) == 0 || x2 >= max_x || y2 >= s->intact2->vyska-5) {
+      break;
+    }
+    piskac();
+    nahodny_skok(x2, y2, 5);
+  }
+  if (zacato) {
+    uber_nahorovak();
+    (*X)++;
+    zakaz(x1, *X, 0, s->intact2->vyska);
   }
   return zacato;
 }
@@ -215,5 +258,9 @@ bool Prekazitor::prekazka() {
       return tramposka();
     case PARKUR:
       return parkur();
+    case PISKACOJUMP:
+      return piskacojump();
+    default:
+      return false;
   }
 }

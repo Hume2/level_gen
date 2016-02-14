@@ -40,7 +40,7 @@ class Prekazitor
     bool parkur();
     bool piskacojump();
 
-    void nahodny_skok(int &x, int &y);
+    void nahodny_skok(int &x, int &y, int max_dx = 11);
     void nahorovak(int dh);
     void dolovak(int dh);
     void stredovak(int l);
