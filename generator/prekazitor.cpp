@@ -249,6 +249,32 @@ bool Prekazitor::piskacojump() {
   return zacato;
 }
 
+bool Prekazitor::pneumatic() {
+  int rezerva1 = (*Y) - min_y;
+  int rezerva2 = s->intact2->vyska - (*Y) - 1;
+  int rezerva = std::min(rezerva1, rezerva2);
+  if (rezerva < 5) {
+    return false;
+  }
+  int max_d = std::min(rezerva, 12) - 5;
+  int dy = 5 + exp_rand(10, max_d);
+  int y_pn = *Y;
+  int nove_y = y_pn + dy;
+
+  Objekt *o = new Objekt("rock", (*X)*32, ((*Y)-1)*32);
+  s->objekty.push_back(o);
+
+  while (*Y < nove_y) {
+    dolovak( std::min(nove_y - (*Y), 4) );
+  }
+  o = new Objekt("pneumatic-platform", (*X)*32, y_pn*32);
+  o->blbosti = "(sprite \"images/objects/platforms/small.sprite\")";
+  s->objekty.push_back(o);
+  stredovak(4);
+  nahorovak(2*dy);
+  return true;
+}
+
 bool Prekazitor::prekazka() {
   TypPrekazky typ = (TypPrekazky)nahodne((int)TYPY_PREKAZEK);
   switch (typ) {
@@ -260,6 +286,8 @@ bool Prekazitor::prekazka() {
       return parkur();
     case PISKACOJUMP:
       return piskacojump();
+    case PNEUMATIC:
+      return pneumatic();
     default:
       return false;
   }

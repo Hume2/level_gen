@@ -129,7 +129,7 @@ void Otaznitor::nasekej_mince() {
     int x = nahodne(w), y = nahodne(h);
     if (uprav_pozici_p2(x, y)) {
       y+= nahodne(3);
-      if (nahodne(10)) {
+      if (nahodne(50)) {
         nas_sektor->intact->poloz_blok(44, x, y);
       } else {
         int n = std::max(signed_xp_rand(5) + 5, 2);
