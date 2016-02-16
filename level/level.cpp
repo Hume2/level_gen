@@ -8,6 +8,8 @@
 
 #include "../generator/random.h"
 
+#include "../tema/tematicke_hodnoty.h"
+
 using namespace std;
 
 Level::Level() :
@@ -25,6 +27,7 @@ Level::Level() :
   tema.pocasi = (TemaLevelu::Pocasi)nahodne(7);
   tema.struktura = TemaLevelu::Tteren;
   tema.vyskopis = (TemaLevelu::Vyskopis)nahodne(6);
+  vyska = std::max(36, TemaLevelu::hornatost[tema.vyskopis] * 12);
   Sektor* hlavni = new Sektor(this, "main");
   sektory.push_back(hlavni);
 }
