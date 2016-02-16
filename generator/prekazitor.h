@@ -22,6 +22,7 @@ class Prekazitor
       PARKUR,
       PISKACOJUMP,
       PNEUMATIC,
+      BODLAKY,
       TYPY_PREKAZEK
     };
 
@@ -41,6 +42,7 @@ class Prekazitor
     bool parkur();
     bool piskacojump();
     bool pneumatic();
+    bool bodlaky();
 
     void nahodny_skok(int &x, int &y, int max_dx = 11);
     void nahorovak(int dh);

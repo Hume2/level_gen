@@ -275,6 +275,23 @@ bool Prekazitor::pneumatic() {
   return true;
 }
 
+bool Prekazitor::bodlaky() {
+  if ((*X) + 7 > max_x) {
+    return false;
+  }
+  stredovak(3);
+  int x_ = *X;
+  int d = nahodne(7) + 1;
+  if ((x_ + d + 3) > max_x) {
+    d = max_x - x_ - 3;
+  }
+  stredovak(d);
+  s->intact->obdelnik(295, x_, *X, (*Y)-1, (*Y)-1);
+  zakaz(x_-1, (*X)+1, (*Y)-5, *Y);
+  stredovak(3);
+  return true;
+}
+
 bool Prekazitor::prekazka() {
   TypPrekazky typ = (TypPrekazky)nahodne((int)TYPY_PREKAZEK);
   switch (typ) {
@@ -288,6 +305,8 @@ bool Prekazitor::prekazka() {
       return piskacojump();
     case PNEUMATIC:
       return pneumatic();
+    case BODLAKY:
+      return bodlaky();
     default:
       return false;
   }
