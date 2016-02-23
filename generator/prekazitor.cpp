@@ -202,7 +202,7 @@ bool Prekazitor::dira() {
 }
 
 bool Prekazitor::tramposka() {
-  bool sm = nahodne(2);
+  bool sm = !nahodne(2);
   int h = nahodne(8) + 5;
 
   if (!uprav_smer(sm, h)) {
@@ -312,7 +312,7 @@ bool Prekazitor::bodlaky() {
   }
   stredovak(3);
   int x_ = *X;
-  int d = nahodne(7) + 1;
+  int d = nahodne(5) + 1;
   if ((x_ + d + 3) > max_x) {
     d = max_x - x_ - 3;
   }
@@ -335,7 +335,7 @@ bool Prekazitor::tajna_chodba() {
 
   Tilemap* tm = new Tilemap(delka, 4, false);
   tm->pojmenuj("secretTM",s->tajnych_chodeb);
-  tm->z_pos = 200 + s->tajnych_chodeb;
+  tm->z_pos = 101 + s->tajnych_chodeb;
   tm->cesta = new Cesta();
   float x, y;
   if (sm) {
