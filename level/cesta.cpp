@@ -41,3 +41,7 @@ void Cesta::oddo(int x1, int y1, int x2, int y2, float cas) {
   uzly.push_back(Uzel(x1, y1, cas));
   uzly.push_back(Uzel(x2, y2, cas));
 }
+
+void Cesta::bod(int x, int y) {
+  uzly.push_back(Uzel(x, y, 1));
+}

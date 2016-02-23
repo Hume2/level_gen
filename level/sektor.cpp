@@ -28,7 +28,8 @@ Sektor::Sektor(Level *l, std::string jmeno_) :
   frgrd(),
   objekty(),
   tilemapy(),
-  obdelniky()
+  obdelniky(),
+  tajnych_chodeb(0)
 {
   bkgrd = new Tilemap(l->sirka, l->vyska, false);
   bkgrd->z_pos = -100;

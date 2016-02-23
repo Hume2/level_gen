@@ -7,6 +7,8 @@
 
 #include "../tema/dlazdicky.h"
 
+class Cesta;
+
 class Tilemap
 {
   public:
@@ -19,10 +21,14 @@ class Tilemap
     float rychlost;
     bool pevny;
     std::string blbosti;
+    std::string jmeno;
     bool viditelny;
+    Cesta* cesta;
 
     void vysav(FILE* f);
     std::string zblbni();
+
+    void pojmenuj(std::string zaklad, int cislo);
 
     // Bomben fest und idioten sicher :DDDDD
     void poloz_blok(BLOK blok, int x, int y);

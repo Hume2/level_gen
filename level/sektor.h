@@ -35,6 +35,8 @@ class Sektor
     std::vector<Tilemap*> tilemapy;
     std::vector<Obdelnik> obdelniky;
 
+    int tajnych_chodeb;
+
     bool je_blok_volny(int x, int y);
     bool je_povoleno(int x, int y);
 

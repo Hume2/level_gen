@@ -4,6 +4,7 @@
 #include "../tema/dlazdicky.h"
 
 class Sektor;
+class Tilemap;
 
 //Překážítor
 class Prekazitor
@@ -23,6 +24,7 @@ class Prekazitor
       PISKACOJUMP,
       PNEUMATIC,
       BODLAKY,
+      TAJNA_CHODBA,
       TYPY_PREKAZEK
     };
 
@@ -43,6 +45,7 @@ class Prekazitor
     bool piskacojump();
     bool pneumatic();
     bool bodlaky();
+    bool tajna_chodba();
 
     void nahodny_skok(int &x, int &y, int max_dx = 11);
     void nahorovak(int dh);
@@ -52,6 +55,7 @@ class Prekazitor
     void uber_dolovak();
     void ostruvek();
     void piskac();
+    void secretarea(int x, int y, Tilemap *tm);
     void zakaz(int x1, int x2, int y1, int y2);
 
     bool uprav_smer(bool &sm, int h);

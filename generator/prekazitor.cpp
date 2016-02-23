@@ -1,4 +1,5 @@
 #include <math.h>
+#include <sstream>
 #include <stdio.h>
 #include <string>
 #include <iostream>
@@ -6,6 +7,7 @@
 
 #include "prekazitor.h"
 
+#include "../level/cesta.h"
 #include "../level/level.h"
 #include "../level/objekt.h"
 #include "../level/sektor.h"
@@ -21,6 +23,16 @@
 #define K til.konvexni
 #define V til.konkavni
 #define P til.pidischody
+
+namespace patch
+{
+    template < typename T > std::string to_string( const T& n )
+    {
+        std::ostringstream stm ;
+        stm << n ;
+        return stm.str() ;
+    }
+}
 
 Prekazitor::Prekazitor(Sektor* s_, int* X_, int* Y_, SadaDlazdic til_, int max_x_, int min_y_) :
   s(s_),
@@ -133,6 +145,25 @@ void Prekazitor::piskac() {
     obj = new Objekt("spidermite",(*X)*32,(*Y)*32);
   }
   s->objekty.push_back(obj);
+}
+
+void Prekazitor::secretarea(int x, int y, Tilemap* tm) {
+  tm->cesta->bod(x*32, y*32);
+  Objekt* obj = new Objekt("secretarea", x*32, y*32);
+  obj->blbosti = "(width " + patch::to_string(tm->sirka*32) + ")\n";
+  obj->blbosti += "(height " + patch::to_string(tm->vyska*32) + ")\n";
+  obj->blbosti += "(fade-tilemap \"" + tm->jmeno + "\")\n";
+  s->objekty.push_back(obj);
+  int x2 = x + tm->sirka - 1;
+  int y2 = y + tm->vyska - 1;
+  for (int i = x+1; i < x2; i++) {
+    for (int j = y; j < y2; j++) {
+      if (nahodne(2)) {
+        s->intact->poloz_blok(44, i, j);
+      }
+    }
+  }
+  zakaz(x, x2 + 1, y, y2 + 1);
 }
 
 bool Prekazitor::uprav_smer(bool &sm, int h) {
@@ -292,6 +323,63 @@ bool Prekazitor::bodlaky() {
   return true;
 }
 
+bool Prekazitor::tajna_chodba() {
+  bool sm = !(nahodne(2));
+  if (!uprav_smer(sm, 4)) {
+    return false;
+  }
+  int delka = exp_rand(6, max_x-(*X)-4) + 3;
+  if (delka < 3) {
+    return false;
+  }
+
+  Tilemap* tm = new Tilemap(delka, 4, false);
+  tm->pojmenuj("secretTM",s->tajnych_chodeb);
+  tm->z_pos = 200 + s->tajnych_chodeb;
+  tm->cesta = new Cesta();
+  float x, y;
+  if (sm) {
+    dolovak(4);
+    stredovak(delka);
+    s->intact2->obdelnik(K[1] , (*X)-delka-1, (*X)-3, (*Y)-5, (*Y)-5);
+    s->intact2->obdelnik(K[4] , (*X)-delka-1, (*X)-3, (*Y)-4, (*Y)-4);
+    s->intact2->obdelnik(K[10], (*X)-delka-1, (*X)-3, (*Y)-3, (*Y)-3);
+    s->intact2->poloz_blok(K[2] , (*X)-2, (*Y)-5);
+    s->intact2->poloz_blok(K[5] , (*X)-2, (*Y)-4);
+    s->intact2->poloz_blok(K[11], (*X)-2, (*Y)-3);
+    s->intact2->poloz_blok(V[0], (*X)-delka-1, (*Y)-3);
+
+    tm->obdelnik(S, 0, tm->sirka-2, 0, tm->vyska-1);
+    tm->obdelnik(K[8], tm->sirka-1, tm->sirka-1, 0, tm->vyska-3);
+    tm->poloz_blok(V[2], tm->sirka-1, tm->vyska-2);
+    tm->poloz_blok(V[4], tm->sirka-1, tm->vyska-1);
+    x = (*X)-delka-1;
+    y = (*Y)-3;
+  } else {
+    stredovak(delka);
+    nahorovak(4);
+    s->intact2->poloz_blok(K[0], (*X)-delka, (*Y)-1);
+    s->intact2->poloz_blok(K[3], (*X)-delka, *Y);
+    s->intact2->poloz_blok(K[9], (*X)-delka, (*Y)+1);
+    s->intact2->obdelnik(K[1] , (*X)-delka+1, *X, (*Y)-1, (*Y)-1);
+    s->intact2->obdelnik(K[4] , (*X)-delka+1, *X, *Y, *Y);
+    s->intact2->obdelnik(K[10], (*X)-delka+1, *X, (*Y)+1, (*Y)+1);
+    s->intact2->poloz_blok(V[1], (*X)-1, (*Y)+1);
+
+    tm->obdelnik(S, 1, tm->sirka-1, 0, tm->vyska-1);
+    tm->obdelnik(K[6], 0, 0, 0, tm->vyska-3);
+    tm->poloz_blok(V[3], 0, tm->vyska-2);
+    tm->poloz_blok(V[5], 0, tm->vyska-1);
+    x = (*X)-delka;
+    y = (*Y)+1;
+  }
+  secretarea(x, y, tm);
+  stredovak(1);
+  s->tilemapy.push_back(tm);
+  s->tajnych_chodeb++;
+  return true;
+}
+
 bool Prekazitor::prekazka() {
   TypPrekazky typ = (TypPrekazky)nahodne((int)TYPY_PREKAZEK);
   switch (typ) {
@@ -307,6 +395,8 @@ bool Prekazitor::prekazka() {
       return pneumatic();
     case BODLAKY:
       return bodlaky();
+    case TAJNA_CHODBA:
+      return tajna_chodba();
     default:
       return false;
   }

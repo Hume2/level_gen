@@ -7,6 +7,8 @@
 
 #include <sstream>
 
+#include "cesta.h"
+
 namespace patch
 {
     template < typename T > std::string to_string( const T& n )
@@ -27,7 +29,9 @@ Tilemap::Tilemap(int sirka_, int vyska_, bool pevny_) :
   rychlost(1),
   pevny(pevny_),
   blbosti(""),
-  viditelny(true)
+  jmeno(""),
+  viditelny(true),
+  cesta(NULL)
 {
   bloky = new BLOK*[sirka];
   for (int x = sirka-1; x >= 0; x--) {
@@ -43,6 +47,10 @@ Tilemap::~Tilemap() {
     delete[] bloky[i];
   }
   delete[] bloky;
+
+  if (cesta) {
+    delete cesta;
+  }
 }
 
 void Tilemap::vysav(FILE *f) {
@@ -59,7 +67,15 @@ void Tilemap::vysav(FILE *f) {
     fprintf(f, "f");
   }
   fprintf(f, ")\n");
+  if (jmeno.size()) {
+    fprintf(f, "\n      (name \"");
+    fputs(jmeno.c_str(), f);
+    fprintf(f, "\")\n");
+  }
   fputs(blbosti.c_str(), f);
+  if (cesta) {
+    cesta->vysav(f);
+  }
   fprintf(f, "\n      (tiles");
   for (int y = 0; y < vyska; y++) {
     for (int x = 0; x < sirka; x++) {
@@ -89,7 +105,7 @@ string Tilemap::zblbni() {
 
   string r = patch::to_string(rychlost);
   result += ")\n      (speed "+r+")\n      (speed-y "+r+")\n";
-  result += blbosti + "\n      (tiles";
+  result += blbosti + "\n      (name \"" + jmeno + "\")\n      (tiles";
 
   for (int y = 0; y < vyska; y++) {
     for (int x = 0; x < sirka; x++) {
@@ -209,4 +225,8 @@ bool Tilemap::je_blok_pevny(int x, int y) {
   } else {
     return je_blok_pevny(bloky[x][y]);
   }
+}
+
+void Tilemap::pojmenuj(string zaklad, int cislo) {
+  jmeno = zaklad + patch::to_string(cislo);
 }

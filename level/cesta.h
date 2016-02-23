@@ -27,6 +27,7 @@ class Cesta
     void vysav(FILE *f);
 
     void oddo(int x1, int y1, int x2, int y2, float cas);
+    void bod(int x, int y);
 };
 
 #endif // CESTA_H
