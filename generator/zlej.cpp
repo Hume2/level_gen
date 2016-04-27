@@ -29,9 +29,10 @@ namespace patch
     }
 }
 
-Zlej::Zlej(Sektor *s_) :
+Zlej::Zlej(Sektor *s_, const double* pocty_) :
   nas_sektor(s_),
-  tvrda_zem(nas_sektor->tema != TemaSektoru::Tvenku)
+  tvrda_zem(nas_sektor->tema != TemaSektoru::Tvenku),
+  pocty(pocty_)
 {
 }
 
@@ -117,7 +118,7 @@ void Zlej::nasekej_zlejsky() {
     if (!nas_sektor->je_povoleno(x, y)) {
       continue;
     }
-    Zlejsci typ = (Zlejsci)nahodne_vyber(ledovi_zlejsci, pocet_zlejsku);
+    Zlejsci typ = (Zlejsci)nahodne_vyber(pocty, pocet_zlejsku);
     switch (typy_zlejsku[typ]) {
       case TZ_CHODEC:
         bezny_zlejsek(x, y, typ);

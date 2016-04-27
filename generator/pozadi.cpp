@@ -203,28 +203,28 @@ void vymysli_pozadi(Sektor *s) {
         break;
       case TemaLevelu::Tles:
         if (s->level->tema.vyskopis == TemaLevelu::Tnebe) {
-          pozadi(s, "BlueRock_Forest/blue-top.png", "BlueRock_Forest/blue-top.png",
-                 "BlueRock_Forest/blue-top.png");
+          pozadi(s, "BlueRock_Forest/blue-top.jpg", "BlueRock_Forest/blue-top.jpg",
+                 "BlueRock_Forest/blue-top.jpg");
         } else  {
-          pozadi(s, "BlueRock_Forest/blue-top.png", "BlueRock_Forest/blue-middle.png",
-                 "BlueRock_Forest/blue-bottom.png");
+          pozadi(s, "BlueRock_Forest/blue-top.jpg", "BlueRock_Forest/blue-middle.jpg",
+                 "BlueRock_Forest/blue-bottom.jpg");
         }
         break;
       case TemaLevelu::Tducholes:
         if (s->level->tema.vyskopis == TemaLevelu::Tnebe) {
-          pozadi(s, "BlueRock_Forest/blue-top.png", "BlueRock_Forest/blue-top.png",
-                 "BlueRock_Forest/blue-top.png");
+          pozadi(s, "BlueRock_Forest/blue-top.jpg", "BlueRock_Forest/blue-top.jpg",
+                 "BlueRock_Forest/blue-top.jpg");
         } else  {
           pozadi(s, "ghostforest.jpg", "ghostforest.jpg", "ghostforest.jpg");
         }
         break;
       case TemaLevelu::Tdzungle:
         if (s->level->tema.vyskopis == TemaLevelu::Tnebe) {
-          pozadi(s, "BlueRock_Forest/blue-top.png", "BlueRock_Forest/blue-top.png",
-                 "BlueRock_Forest/blue-top.png");
+          pozadi(s, "BlueRock_Forest/blue-top.jpg", "BlueRock_Forest/blue-top.jpg",
+                 "BlueRock_Forest/blue-top.jpg");
         } else  {
-          pozadi(s, "BlueRock_Forest/blue-top.png", "BlueRock_Forest/rolling-middle.png",
-                 "BlueRock_Forest/rolling-bottom.png");
+          pozadi(s, "BlueRock_Forest/blue-top.jpg", "BlueRock_Forest/rolling-middle.jpg",
+                 "BlueRock_Forest/rolling-bottom.jpg");
         }
         break;
       default:

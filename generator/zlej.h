@@ -12,12 +12,13 @@ class Tilemap;
 class Zlej
 {
   public:
-    Zlej(Sektor* s_);
+    Zlej(Sektor* s_, const double *pocty_);
     virtual void nasekej_zlejsky();
 
   private:
     Sektor* nas_sektor;
     bool tvrda_zem;
+    const double* pocty;
 
     bool najdi_pozici_dole(int x, int &y);
     bool najdi_pozici_nahore(int x, int &y);

@@ -21,12 +21,12 @@ Level::Level() :
   sirka(473),
   poradi(-1)
 {
-  tema.biom = TemaLevelu::Tledovec;
+  tema.biom = (TemaLevelu::Biom)nahodne(6);
   tema.denni_doba = (TemaLevelu::DenniDoba)nahodne(10);
   tema.hrani = TemaLevelu::T1D;
   tema.pocasi = (TemaLevelu::Pocasi)nahodne(7);
   tema.struktura = TemaLevelu::Tteren;
-  tema.vyskopis = (TemaLevelu::Vyskopis)nahodne(6);
+  tema.vyskopis = TemaLevelu::Tparhorkatina;//(TemaLevelu::Vyskopis)nahodne(6);
   vyska = std::max(36, TemaLevelu::hornatost[tema.vyskopis] * 12);
   Sektor* hlavni = new Sektor(this, "main");
   sektory.push_back(hlavni);

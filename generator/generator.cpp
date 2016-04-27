@@ -16,22 +16,50 @@
 #include "strop.h"
 #include "zlej.h"
 
+#include "../level/level.h"
 #include "../level/sektor.h"
 #include "../level/tilemap.h"
 
 #include "../tema/dlazdickoraj.h"
+#include "../tema/zlejsci.h"
+
+SadaDlazdic spravna_sada(Sektor *s) {
+  switch (s->level->tema.biom) {
+    case TemaLevelu::Tledovec:
+    case TemaLevelu::Tkrystaly:
+      return PoleDlazdic::led;
+    case TemaLevelu::Tles:
+    case TemaLevelu::Tdzungle:
+      return PoleDlazdic::les;
+    case TemaLevelu::Tducholes:
+      return PoleDlazdic::ducholes;
+  }
+}
+
+const double* spravni_zlejsci(Sektor *s) {
+  switch (s->level->tema.biom) {
+    case TemaLevelu::Tledovec:
+    case TemaLevelu::Tkrystaly:
+      return ledovi_zlejsci;
+    case TemaLevelu::Tles:
+    case TemaLevelu::Tdzungle:
+      return lesni_zlejsci;
+    case TemaLevelu::Tducholes:
+      return ducholesni_zlejsci;
+  }
+}
 
 void gen_ledove_pozadi(Sektor *s) {
   LedovePozadi lp(s);
 }
 
 void gen_lesni_podlaha(Sektor *s) {
-  LesniPodlaha lp(s, PoleDlazdic::led);
+  LesniPodlaha lp(s, spravna_sada(s));
   lp.generuj();
 }
 
 void gen_jeskyne1(Sektor *s) {
-  LesniPodlaha lp(s, PoleDlazdic::led);
+  LesniPodlaha lp(s, spravna_sada(s));
   lp.set_min_y(s->intact2->vyska/2 + 3);
   Strop st(s, PoleDlazdic::led);
   st.max_y = s->intact2->vyska/2 - 2;
@@ -61,7 +89,7 @@ void gen_otazniky(Sektor *s) {
 }
 
 void gen_zlejsky(Sektor *s) {
-  Zlej z(s);
+  Zlej z(s, spravni_zlejsci(s));
   z.nasekej_zlejsky();
 }
 
