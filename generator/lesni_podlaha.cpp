@@ -331,7 +331,7 @@ void LesniPodlaha::generuj() {
     codal[Adolovak] = trr;
     codal[Astoupej] = stoupani > 4 ? trr*trr : sqrt(trr);
     codal[Aklesej] = stoupani < 4 ? trr*trr : sqrt(trr);
-    codal[Aprekazej] = trr/5;
+    codal[Aprekazej] = double(trr)/5;
     if (stred < s) {
       double coef = (s-stred)/h;
       codal[Adolovak] += coef;

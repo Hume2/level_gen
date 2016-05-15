@@ -82,7 +82,7 @@ void Prekazitor::zakaz(int x1, int x2, int y1, int y2) {
 }
 
 void Prekazitor::stredovak(int l) {
-  int X2 = *X + l;
+  int X2 = *X + l - 1;
   int Y2 = *Y-1;
   s->intact2->obdelnik(K[1],*X,X2,Y2,Y2);
   s->intact2->obdelnik(K[4],*X,X2,*Y,*Y);
@@ -158,7 +158,7 @@ void Prekazitor::secretarea(int x, int y, Tilemap* tm) {
   int y2 = y + tm->vyska - 1;
   for (int i = x+1; i < x2; i++) {
     for (int j = y; j < y2; j++) {
-      if (nahodne(2)) {
+      if (nahodne(2) && s->je_blok_volny(i, j)) {
         s->intact->poloz_blok(44, i, j);
       }
     }
