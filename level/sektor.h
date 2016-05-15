@@ -38,6 +38,8 @@ class Sektor
     int tajnych_chodeb;
 
     bool je_blok_volny(int x, int y);
+    bool je_obdelnik_volny(int x1, int x2, int y1, int y2);
+    bool je_obdelnik_prazny(int x1, int x2, int y1, int y2);
     bool je_povoleno(int x, int y);
 
     void vysav(FILE *f);

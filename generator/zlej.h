@@ -3,6 +3,8 @@
 
 #include <string>
 
+#include "hledej_zem.h"
+
 #include "../tema/zlejsci.h"
 
 class Objekt;
@@ -17,6 +19,7 @@ class Zlej
 
   private:
     Sektor* nas_sektor;
+    HledejZem hl;
     bool tvrda_zem;
     const double* pocty;
 

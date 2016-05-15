@@ -3,6 +3,8 @@
 
 #include <string>
 
+#include "hledej_zem.h"
+
 class Sektor;
 class Tilemap;
 
@@ -18,6 +20,7 @@ class Cilovnik
 
   private:
     Sektor* nas_sektor;
+    HledejZem hl;
 
     void najdi_pozici_dole(int x, int &y);
     void najdi_pozici_nahore(int x, int &y);

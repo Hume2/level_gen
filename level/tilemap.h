@@ -39,9 +39,13 @@ class Tilemap
     void sluc_s(Tilemap* t);
 
     bool je_prazdny();
+    bool je_obdelnik_prazdny(int x1, int x2, int y1, int y2);
+    bool je_obdelnik_pevny(int x1, int x2, int y1, int y2);
     bool lze_sloucit(Tilemap* t);
     bool je_blok_pevny(BLOK b);
     bool je_blok_pevny(int x, int y);
+
+    void znormalni(int& x1, int& x2, int& y1, int& y2);
 };
 
 #endif // TILEMAP_H

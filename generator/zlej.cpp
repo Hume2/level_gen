@@ -31,6 +31,7 @@ namespace patch
 
 Zlej::Zlej(Sektor *s_, const double* pocty_) :
   nas_sektor(s_),
+  hl(s_, HledejZem::VOLNY),
   tvrda_zem(nas_sektor->tema != TemaSektoru::Tvenku),
   pocty(pocty_)
 {
@@ -67,7 +68,7 @@ bool Zlej::najdi_pozici_nahore(int x, int &y) {
 }
 
 bool Zlej::uprav_pozici(int x, int &y) {
-  if (nas_sektor->je_blok_volny(x,y)) {
+/*  if (nas_sektor->je_blok_volny(x,y)) {
     y++;
     if (!najdi_pozici_dole(x,y)) {
       return false;
@@ -78,13 +79,14 @@ bool Zlej::uprav_pozici(int x, int &y) {
       return false;
     }
   }
-  y--;
+  y--;*/
+  hl.hledej_zem(x, y);
 
   return nas_sektor->je_povoleno(x,y);
 }
 
 bool Zlej::uprav_horni_pozici(int x, int &y) {
-  if (nas_sektor->je_blok_volny(x,y)) {
+  /*if (nas_sektor->je_blok_volny(x,y)) {
     y--;
     if (!najdi_pozici_nahore(x,y)) {
       return false;
@@ -94,7 +96,9 @@ bool Zlej::uprav_horni_pozici(int x, int &y) {
     if (!inv_najdi_pozici_dole(x,y)) {
       return false;
     }
-  }
+  }*/
+
+  hl.hledej_strop(x, y);
 
   return nas_sektor->je_povoleno(x,y);
 }

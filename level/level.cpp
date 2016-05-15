@@ -21,7 +21,7 @@ Level::Level() :
   sirka(473),
   poradi(-1)
 {
-  tema.biom = (TemaLevelu::Biom)nahodne(6);
+  tema.biom = (TemaLevelu::Biom)nahodne(5);
   tema.denni_doba = (TemaLevelu::DenniDoba)nahodne(10);
   tema.hrani = TemaLevelu::T1D;
   tema.pocasi = (TemaLevelu::Pocasi)nahodne(7);

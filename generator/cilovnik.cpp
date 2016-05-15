@@ -30,7 +30,8 @@ namespace patch
 }
 
 Cilovnik::Cilovnik(Sektor *s_) :
-  nas_sektor(s_)
+  nas_sektor(s_),
+  hl(s_, HledejZem::VOLNY)
 {
 }
 
@@ -144,30 +145,11 @@ void Cilovnik::hledej_trasu(int &x, int &y) {
 }
 
 void Cilovnik::najdi_pozici_dole(int x, int &y) {
-  while (nas_sektor->je_blok_volny(x,y) && y < nas_sektor->intact->vyska) {
-    y++;
-  }
-
-  if (y >= nas_sektor->intact2->vyska) {
-    y = 0;
-    while (nas_sektor->je_blok_volny(x,y) && y < nas_sektor->intact->vyska) {
-      y++;
-    }
-  }
-  y--;
+  hl.hledej_zem(x, y);
 }
 
 void Cilovnik::najdi_pozici_nahore(int x, int &y) {
-  while (!nas_sektor->je_blok_volny(x,y) && y >= 0) {
-    y--;
-  }
-
-  if (y < 0) {
-    y = nas_sektor->intact2->vyska;
-    while (!nas_sektor->je_blok_volny(x,y) && y >= 0) {
-      y--;
-    }
-  }
+  hl.hledej_strop(x, y);
 }
 
 void Cilovnik::udelej_end_seq(int x, int y, std::string seq) {

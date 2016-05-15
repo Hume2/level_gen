@@ -124,6 +124,35 @@ bool Sektor::je_blok_volny(int x, int y) {
   return true;
 }
 
+bool Sektor::je_obdelnik_prazny(int x1, int x2, int y1, int y2) {
+  if (!bkgrd->je_obdelnik_prazdny(x1, x2, y1, y2) ||
+      !intact->je_obdelnik_prazdny(x1, x2, y1, y2) ||
+      !intact2->je_obdelnik_prazdny(x1, x2, y1, y2) ||
+      !frgrd->je_obdelnik_prazdny(x1, x2, y1, y2)) {
+    return false;
+  }
+  for (vector<Tilemap*>::iterator i = tilemapy.begin(); i != tilemapy.end(); i++) {
+    Tilemap* tm = *i;
+    if (!tm->je_obdelnik_prazdny(x1, x2, y1, y2)) {
+      return false;
+    }
+  }
+  return true;
+}
+
+bool Sektor::je_obdelnik_volny(int x1, int x2, int y1, int y2) {
+  if (!intact2->je_obdelnik_pevny(x1, x2, y1, y2)) {
+    return false;
+  }
+  for (vector<Tilemap*>::iterator i = tilemapy.begin(); i != tilemapy.end(); i++) {
+    Tilemap* tm = *i;
+    if (!tm->je_obdelnik_pevny(x1, x2, y1, y2) && tm->pevny) {
+      return false;
+    }
+  }
+  return true;
+}
+
 bool Sektor::je_povoleno(int x, int y) {
   //std::cout << "x" << x << " y" << y << std::endl;
   for (vector<Obdelnik>::iterator i = obdelniky.begin(); i != obdelniky.end(); i++) {

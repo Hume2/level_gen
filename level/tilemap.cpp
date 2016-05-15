@@ -125,18 +125,7 @@ void Tilemap::poloz_blok(BLOK blok, int x, int y) {
 }
 
 void Tilemap::obdelnik(BLOK blok, int x1, int x2, int y1, int y2) {
-  if (x1 < 0) {
-    x1 = 0;
-  }
-  if (y1 < 0) {
-    y1 = 0;
-  }
-  if (x2 >= sirka) {
-    x2 = sirka - 1;
-  }
-  if (y2 >= vyska) {
-    y2 = vyska - 1;
-  }
+  znormalni(x1, x2, y1, y2);
 
   for (int y = y1; y <= y2; y++) {
     for (int x = x1; x <= x2; x++) {
@@ -225,6 +214,49 @@ bool Tilemap::je_blok_pevny(int x, int y) {
     return false;
   } else {
     return je_blok_pevny(bloky[x][y]);
+  }
+}
+
+bool Tilemap::je_obdelnik_prazdny(int x1, int x2, int y1, int y2) {
+  znormalni(x1, x2, y1, y2);
+
+  for (int y = y1; y <= y2; y++) {
+    for (int x = x1; x <= x2; x++) {
+      if (bloky[x][y]) {
+        return false;
+      }
+    }
+  }
+
+  return true;
+}
+
+bool Tilemap::je_obdelnik_pevny(int x1, int x2, int y1, int y2) {
+  znormalni(x1, x2, y1, y2);
+
+  for (int y = y1; y <= y2; y++) {
+    for (int x = x1; x <= x2; x++) {
+      if (je_blok_pevny(x, y)) {
+        return false;
+      }
+    }
+  }
+
+  return true;
+}
+
+void Tilemap::znormalni(int& x1, int& x2, int& y1, int& y2) {
+  if (x1 < 0) {
+    x1 = 0;
+  }
+  if (y1 < 0) {
+    y1 = 0;
+  }
+  if (x2 >= sirka) {
+    x2 = sirka - 1;
+  }
+  if (y2 >= vyska) {
+    y2 = vyska - 1;
   }
 }
 
