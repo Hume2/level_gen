@@ -16,5 +16,6 @@ void gen_ulozovaky(Sektor *s);
 void gen_zlejsky(Sektor *s);
 
 void gen_ryby(Tilemap *tm);
+void gen_stromy(Sektor *s);
 
 #endif //GENERATOR_H

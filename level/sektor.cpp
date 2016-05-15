@@ -52,6 +52,7 @@ Sektor::Sektor(Level *l, std::string jmeno_) :
   gen_otazniky(this);
   gen_zlejsky(this);
   gen_ryby(intact2);
+  gen_stromy(this);
   vymysli_pocasi(this);
   vymysli_hudbu(this);
   vymysli_pozadi(this);

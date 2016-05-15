@@ -13,6 +13,7 @@
 #include "lesni_podlaha.h"
 #include "otaznitor.h"
 #include "rybator.h"
+#include "stromovak.h"
 #include "strop.h"
 #include "zlej.h"
 
@@ -96,4 +97,9 @@ void gen_zlejsky(Sektor *s) {
 void gen_ryby(Tilemap *tm) {
   Rybator r(tm);
   r.nasekej_ryby();
+}
+
+void gen_stromy(Sektor *s) {
+  Stromovak st(s);
+  st.nasekej_stromy();
 }
